@@ -1,14 +1,15 @@
 DELIMITER //
 
 -- Trigger sau khi thêm nhân viên
+drop TRIGGER update_employee_count_after_insert;
 CREATE TRIGGER update_employee_count_after_insert 
 AFTER INSERT ON NhanVien
 FOR EACH ROW
 BEGIN
-    UPDATE PhongBan 
+    UPDATE soluongnhanvien 
     SET SoLuongNhanVien = SoLuongNhanVien + 1
     WHERE MaPhongBan = NEW.MaPhongBan;
-END //
+END;
 
 -- Trigger sau khi xóa nhân viên
 CREATE TRIGGER update_employee_count_after_delete
@@ -18,6 +19,6 @@ BEGIN
     UPDATE PhongBan 
     SET SoLuongNhanVien = SoLuongNhanVien - 1
     WHERE MaPhongBan = OLD.MaPhongBan;
-END //
+END;
 
 DELIMITER ;

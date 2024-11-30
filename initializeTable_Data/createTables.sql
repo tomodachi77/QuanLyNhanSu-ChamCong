@@ -17,6 +17,7 @@ CREATE TABLE PhongBan (
     MaPhongBan CHAR(6) PRIMARY KEY,
     TenPhongBan NVARCHAR(100) NOT NULL,
     MaChiNhanh CHAR(4) NOT NULL,
+    SoLuongNhanVien INT DEFAULT 0,
     MSNV_VanHanh CHAR(6),
     FOREIGN KEY (MaChiNhanh) REFERENCES ChiNhanh(MaChiNhanh)
     -- Sau khi đã import đủ data thì thêm thuộc tính khóa ngoại và cập nhật NV quản lý
