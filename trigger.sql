@@ -1,0 +1,1 @@
+--Trigger để cập nhật số lượng nhân viên trong mỗi phòng ban khi có thay đổi trong bảng NhanVien.
