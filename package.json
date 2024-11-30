@@ -1,0 +1,17 @@
+{
+  "name": "quanlynhansu-chamcong",
+  "version": "1.0.0",
+  "description": "Database Systems - Assignment 2",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.11.5",
+    "quanlynhansu-chamcong": "file:"
+  }
+}
