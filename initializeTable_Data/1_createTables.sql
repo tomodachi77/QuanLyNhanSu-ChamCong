@@ -19,6 +19,7 @@ CREATE TABLE PhongBan (
     MaChiNhanh CHAR(4) NOT NULL,
     SoLuongNhanVien INT DEFAULT 0,
     MSNV_VanHanh CHAR(6),
+    SoLuongNhanVien INT DEFAULT 0,
     FOREIGN KEY (MaChiNhanh) REFERENCES ChiNhanh(MaChiNhanh)
     -- Sau khi đã import đủ data thì thêm thuộc tính khóa ngoại và cập nhật NV quản lý
 );
@@ -117,6 +118,7 @@ CREATE TABLE BangChamCong (
     MaNV CHAR(6),
     Ngay DATE,
     TrangThai ENUM('Có mặt', 'Vắng có phép', 'Vắng không phép'),
+    TongSoGioLam DECIMAL(5, 2) DEFAULT NULL,
     PRIMARY KEY (MaNV, Ngay),
     FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
 );
