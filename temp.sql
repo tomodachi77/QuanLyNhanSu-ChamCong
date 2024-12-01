@@ -44,3 +44,23 @@ SELECT * FROM soluongnhanvien WHERE soluongnhanvien.`MaPhongBan`='PB0106';
 INSERT INTO NhanVien (MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan)
 VALUES
     ('NV8059', 'Văn', 'Phú', 'Ân', 'Nam', 'vanphuan2@gmail.com', 90000, 'PB0106');
+
+-- CREATE TABLE ChiNhanh (
+--     MaChiNhanh CHAR(4) PRIMARY KEY,
+--     TenChiNhanh NVARCHAR(100) NOT NULL,
+--     DiaChi NVARCHAR(200) NOT NULL,
+--     MSNV_QuanLy CHAR(6)
+--     -- Sau khi đã import đủ data thì thêm thuộc tính khóa ngoại và cập nhật NV quản lý
+-- );
+DELIMITER //
+CREATE PROCEDURE IF NOT EXISTS insert_ChiNhanh (MaChiNhanh CHAR(4), TenChiNhanh NVARCHAR(100), DiaChi NVARCHAR(200), MSNV_QuanLy CHAR(6))
+BEGIN
+    INSERT INTO chinhanh VALUES (MaChiNhanh, TenChiNhanh, DiaChi, MSNV_QuanLy)
+END; //
+
+DELIMITER ;
+
+SELECT * FROM chinhanh;
+CALL `insert_ChiNhanh`('CN05', 'Chi Nhánh Bình Thạnh', '123, Đường Phạm Ngũ Lão, Phường 12, Quận Bình Thạnh, Thành phố Hồ Chí Minh', 'NV1271');
+
+DELETE FROM chinhanh WHERE chinhanh.`MaChiNhanh`='CN05';
