@@ -2,25 +2,25 @@
 import './App.css'
 import Temp from './components/Temp/temp';
 
-function App() {
+async function App() {
   const fetchNhanVien = async () => {
     const res = await fetch("/api/nhanvien");
     const data = await res.json()
-    console.log(data.nhanvien)
+    // console.log(data.nhanvien)
     return data.nhanvien
   }
 
-  let employees = fetchNhanVien()
-  console.log(employees)
+  let employees = fetchNhanVien().then(() => {
+    console.log(employees)
+  }).then(() => {
+    return (
+      <div>
+        Hello
+      </div>
+    )
+  })
   
   
-  return (
-    <div>
-      {employees.map((nhanvien, index) => (
-        <div key={index} {...nhanvien}>{nhanvien.Ho}</div>
-      ))}
-    </div>
-  )
   // const showNhanVien = () => {
     
   // }
