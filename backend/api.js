@@ -26,3 +26,9 @@ export const insertChiNhanh = async (MaChiNhanh, TenChiNhanh, DiaChi, MSNV_QuanL
     return [result, message];
 }
 
+export const getMaNV_TenNhanVien = async () => {
+    const rows = await ReadQuery("SELECT `MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as 'TenNhanVien' from nhanvientoanthoigian NATURAL INNER JOIN nhanvien ORDER BY `MaNV`;")
+    return rows
+}
+
+

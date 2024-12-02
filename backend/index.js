@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { getChiNhanh, getChiNhanh_Manager, getNhanVien, getPhongBan, insertChiNhanh } from './api.js'
+import { getChiNhanh, getChiNhanh_Manager, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh } from './api.js'
 import bodyParser from 'body-parser'
 
 dotenv.config()
@@ -50,6 +50,11 @@ app.post('/api/chinhanh/insert', async function (req, res) {
     })
     
 })
+
+app.get('/api/FullTime-MaNV-TenNhanVien', async function (req, res) {
+    const MaNV_TenNhanVien = await getMaNV_TenNhanVien();
+    res.send({MaNV_TenNhanVien})
+}) 
 
 app.listen(PORT, (req, res) => {
     console.log(`Server start at http://localhost:${PORT}`);

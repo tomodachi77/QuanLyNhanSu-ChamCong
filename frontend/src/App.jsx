@@ -6,6 +6,7 @@ import ChiNhanhInfo from './pages/chinhanhInfo';
 import DuAnInfo from './pages/DuAnInfo';
 import NhanVienInfo from './pages/NhanVienInfo';
 import PhongBanInfo from './pages/PhongBanInfo';
+import ChiNhanhInsert from './pages/ChiNhanhInsert';
 
 // function App() {
 //   // Tạo state để lưu trữ danh sách nhân viên
@@ -64,6 +65,8 @@ function App() {
           <Route path='/phong-ban' element={<PhongBanInfo/>}/>
           <Route path='/du-an' element={<DuAnInfo/>}/>
           <Route path='/nhan-vien' element={<NhanVienInfo/>}/>
+
+          <Route path='/chi-nhanh/insert' element={<ChiNhanhInsert/>}/>
         </Routes>
       </div>
     </div>
