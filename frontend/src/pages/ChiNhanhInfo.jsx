@@ -17,7 +17,7 @@ function ChiNhanhInfo() {
     try {
       const res = await fetch("/api/chinhanh-tenQuanLy");
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       // console.log(data);
       setChiNhanh(data.chinhanh_tenQuanLy)
     } catch (error) {
