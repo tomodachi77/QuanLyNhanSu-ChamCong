@@ -10,6 +10,11 @@ export const getPhongBan = async (MaPB) => {
     return rows;
 }
 
+export const getChiNhanh = async () => {
+    const rows = await ReadQuery('Select * from chinhanh');
+    return rows;
+}
+
 export const insertChiNhanh = async (MaChiNhanh, TenChiNhanh, DiaChi, MSNV_QuanLy) => {
     const [result, message] = await WriteQuery(`CALL \`insert_ChiNhanh\`('${MaChiNhanh}', '${TenChiNhanh}', '${DiaChi}', '${MSNV_QuanLy}')`);
     // console.log("result", result)
