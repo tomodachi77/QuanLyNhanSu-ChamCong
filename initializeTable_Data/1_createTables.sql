@@ -43,7 +43,7 @@ CREATE TABLE Sdt_NhanVien (
     MaNV CHAR(6),
     SoDienThoai VARCHAR(10),
     PRIMARY KEY (MaNV, SoDienThoai)
-)
+);
 
 -- Tạo bảng Nhân viên toàn thời gian
 CREATE TABLE NhanVienToanThoiGian (
