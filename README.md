@@ -10,6 +10,7 @@
 - Mở terminal, chạy lệnh `git clone git@github.com:HK241-HCSDL-L11G2/QuanLyNhanSu-ChamCong.git`
 ## Chạy Backend
 - Cd vào folder QuanLyNhanSu-ChamCong, chạy lệnh `npm install` để cài các node_modules
+- Chạy các file sql theo thứ tự đã đánh số để khởi tạo dữ liệu trên MySQL
 - Ở folder QuanLyNhanSu-ChamCong, tạo 1 file có tên `.env`, copy các dòng ở file `example_env.txt` sang file vừa tạo, thay đổi những chỗ cần thiết (như MYSQL_PASSWORD)
 - Chạy `npm run dev` ở terminal trong folder QuanLyNhanSu-ChamCong để khởi động server backend.
 ## Chạy Frontend
