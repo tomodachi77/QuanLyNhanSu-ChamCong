@@ -66,4 +66,7 @@ CALL `insert_ChiNhanh`('CN05', 'Chi Nhánh Bình Thạnh', '123, Đường Phạ
 DELETE FROM chinhanh WHERE chinhanh.`MaChiNhanh`='CN05';
 
 -- SELECT  FROM chinhanh NATURAL INNER JOIN nhanvientoanthoigian NATURAL INNER JOIN nhanvien;
-SELECT `MaChiNhanh`, `TenChiNhanh`, `DiaChi`, nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`,' ', nhanvien.`TenLot`,' ', nhanvien.`Ten`) as 'TenQuanLy' from chinhanh JOIN nhanvien ON chinhanh.`MSNV_QuanLy`=nhanvien.`MaNV`;
+-- SELECT `MaChiNhanh`, `TenChiNhanh`, `DiaChi`, nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`,' ', nhanvien.`TenLot`,' ', nhanvien.`Ten`) as 'TenQuanLy' from chinhanh JOIN nhanvien ON chinhanh.`MSNV_QuanLy`=nhanvien.`MaNV`;
+
+
+SELECT `MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as 'TenNhanVien' from nhanvientoanthoigian NATURAL INNER JOIN nhanvien ORDER BY `MaNV`;
