@@ -119,8 +119,6 @@ function ChiNhanhInsert() {
                     background: "linear-gradient(to right, #00b09b, #96c93d)",
                 }
             }).showToast();
-
-            clearFields();
         }
         
     }
@@ -135,14 +133,6 @@ function ChiNhanhInsert() {
         inputs.forEach(input => {
             input.value = "";
         });
-
-        setNewChiNhanh({
-            MaChiNhanh: "",
-            DiaChi: "",
-            TenChiNhanh: "",
-            MSNV_QuanLy: ""
-        });
-
     }
 
     // const options = []
