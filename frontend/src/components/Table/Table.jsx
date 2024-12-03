@@ -12,7 +12,7 @@ function Table(props) {
         <div className="relative w-fit h-fit overflow-scroll flex flex-col rounded-xl bg-clip-border border-stone-200">
             <table className='border-collapse'>
                 <TableHeader columnHeaders={props.columnHeaders}/>
-                <TableRow rowsData={props.rowsData} canEdit={props.canEdit} canDelete={props.canDelete}/>
+                <TableRow rowsData={props.rowsData} canEdit={props.canEdit} canDelete={props.canDelete} editFunction={props.editFunction} deleteFunction={props.deleteFunction} editFunctionParam={props.editFunctionParam} deleteFunctionParam={props.deleteFunctionParam}/>
             </table>
         </div>
     )

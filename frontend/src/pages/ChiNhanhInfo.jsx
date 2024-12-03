@@ -34,7 +34,7 @@ function ChiNhanhInfo() {
         <h1 className='w-full font-bold text-4xl text-center'>
           Thông tin chi nhánh
         </h1>
-        <ChiNhanhTable rowsData={ChiNhanh}/>
+        <ChiNhanhTable rowsData={ChiNhanh} />
         <div className='w-fit border-blue-300 hover:border-blue-600 border rounded-md'>
           <Button label={"Thêm chi nhánh"} path={"/chi-nhanh/insert"}/>
         </div>
