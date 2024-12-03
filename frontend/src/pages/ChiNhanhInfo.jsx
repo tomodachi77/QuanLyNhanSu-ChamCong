@@ -17,7 +17,7 @@ function ChiNhanhInfo() {
     try {
       const res = await fetch("/api/chinhanh-tenQuanLy");
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       // console.log(data);
       setChiNhanh(data.chinhanh_tenQuanLy)
     } catch (error) {
@@ -34,8 +34,8 @@ function ChiNhanhInfo() {
         <h1 className='w-full font-bold text-4xl text-center'>
           Thông tin chi nhánh
         </h1>
-        <ChiNhanhTable rowsData={ChiNhanh}/>
-        <div className='w-fit border-blue-300 border rounded-md'>
+        <ChiNhanhTable rowsData={ChiNhanh} />
+        <div className='w-fit border-blue-300 hover:border-blue-600 border rounded-md'>
           <Button label={"Thêm chi nhánh"} path={"/chi-nhanh/insert"}/>
         </div>
     </div>

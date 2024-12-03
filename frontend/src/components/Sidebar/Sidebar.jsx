@@ -7,7 +7,7 @@ const Sidebar = () => {
             <div>
                 <div className="w-full h-fit flex flex-col items-center py-5 border-b border-slate-300">
                     <Avatar/>
-                    <p>Chủ sở hữu công ty</p>
+                    <p className="font-semibold text-lg">Chủ sở hữu công ty</p>
                 </div>
                 <div>
                     <Button label={"Thông tin chi nhánh"} path={'/chi-nhanh'} className="w-full"/>
