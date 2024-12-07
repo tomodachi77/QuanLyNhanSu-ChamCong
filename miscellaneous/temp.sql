@@ -70,3 +70,12 @@ DELETE FROM chinhanh WHERE chinhanh.`MaChiNhanh`='CN05';
 
 
 SELECT `MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as 'TenNhanVien' from nhanvientoanthoigian NATURAL INNER JOIN nhanvien ORDER BY `MaNV`;
+
+-- NV1108	Bùi	Bích	Như	Nam	buibichnhu@gmail.com	1.00	1.00	12	25000.00	PB0403
+-- INSERT INTO NhanVien (MaNV, Ho, TenLot, Ten, GioiTinh, Email, HeSoPhatDiTre, HeSoPhatVangKhongPhep, SoNgayNghi, LuongTheoGio, MaPhongBan)
+CALL `ThemNhanVien`('NV0234', "Tran", "Anh", "Khoi", "Nam", "trananhkhoitv@gmail.com", 0.5, 0.5, 12, 40000, "PB0302"); 
+
+-- Tham số ban đầu là ngày bắt đầu và ngày kết thúc tính lương + MaNV
+-- loop qua từng ngày trong bảng ngày chấm công, tính tổng luongngay theo từng nhân viên
+
+SELECT * from quanlynhansu.bangchamcong LIMIT 20;
