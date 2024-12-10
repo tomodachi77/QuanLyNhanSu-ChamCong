@@ -3,7 +3,7 @@ import Table from '../Table/Table';
 import { useNavigate } from 'react-router-dom';
 
 
-function NhanVienTable({ rowsData, setRowsData }) {
+function NhanVienTable({ rowsData, setRowsData, currentPage }) {
   // Định nghĩa các cột cho bảng nhân viên
   const headers = [
     'Mã Nhân Viên', 
@@ -72,7 +72,7 @@ function NhanVienTable({ rowsData, setRowsData }) {
   const editFunction = (MaNV) => {
     console.log('MaNV received in editFunction:', MaNV); // Log giá trị MaNV
     if (MaNV) {
-      navigate(`/nhan-vien/edit/${MaNV}`);
+      navigate(`/nhan-vien/edit/${MaNV}`, { state: { currentPage } });
     } else {
       console.error('Mã nhân viên không hợp lệ');
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import InputField from '../components/InputField/InputField';
 import SelectField from '../components/SelectField/SelectField';
 import Button from '../components/Button/button';
@@ -8,6 +8,8 @@ import Toastify from 'toastify-js';
 function NhanVienEdit() {
   const { MaNV } = useParams(); // Lấy Mã nhân viên từ URL
   const navigate = useNavigate();
+  const location = useLocation(); // Lấy thông tin state từ điều hướng
+  const currentPage = location.state?.currentPage || 1; // Lấy currentPage, mặc định là 1 nếu không có
 
   // State lưu thông tin nhân viên
   const [nhanVien, setNhanVien] = useState({
@@ -169,7 +171,7 @@ function NhanVienEdit() {
             background: 'linear-gradient(to right, #00b09b, #96c93d)'
           }
         }).showToast();
-        navigate('/nhan-vien');
+        navigate(`/nhan-vien?page=${currentPage}`); // Quay lại trang đúng
       } else {
         Toastify({
           text: `Cập nhật thất bại: ${data.message}`,
@@ -191,7 +193,7 @@ function NhanVienEdit() {
   return (
     <div className='w-full'>
       <div className='py-5 px-8 flex flex-col gap-3 w-1/2 m-auto'>
-        <h1 className='text-center text-lg font-bold'>Chỉnh sửa nhân viên</h1>
+        <h1 className='text-center text-lg font-bold'>Chỉnh sửa thông tin nhân viên {MaNV}</h1>
         <InputField
           label={'Họ'}
           value={nhanVien.Ho}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import InputField from '../components/InputField/InputField';
 import SelectField from '../components/SelectField/SelectField';
 import Button from '../components/Button/button';
@@ -17,6 +18,11 @@ function NhanVienInsert() {
   });
 
   const [phongBanOptions, setPhongBanOptions] = useState([]);
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const currentPage = parseInt(searchParams.get('page'), 10) || 1;
+
 
   // Fetch danh sách phòng ban từ backend
   const fetchPhongBans = async () => {
@@ -133,6 +139,7 @@ function NhanVienInsert() {
           background: 'linear-gradient(to right, #00b09b, #96c93d)'
         }
       }).showToast();
+      navigate(`/nhan-vien?page=${currentPage}`);
     }
   };
   
