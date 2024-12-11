@@ -43,6 +43,7 @@ CREATE TABLE Sdt_NhanVien (
     MaNV CHAR(6),
     SoDienThoai VARCHAR(10),
     PRIMARY KEY (MaNV, SoDienThoai)
+    Foreign Key (MaNV) REFERENCES nhanvien(MaNV)
 );
 
 -- Tạo bảng Nhân viên toàn thời gian
