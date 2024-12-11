@@ -1,4 +1,4 @@
-import { ReadQuery, WriteQuery } from "./database.js";
+import { ReadFromProcedureQuery, ReadQuery, WriteQuery } from "./database.js";
 
 export const getNhanVien = async () => {
     const rows = await ReadQuery('SELECT * FROM NhanVien');
@@ -16,8 +16,22 @@ export const getChiNhanh = async () => {
     return rows;
 }
 
+export const getMaChiNhanh_TenChiNhanh = async() => {
+    const rows = await ReadQuery(`Select CONCAT(\`MaChiNhanh\`, ' - ', \`TenChiNhanh\`) from chinhanh`)
+    return rows;
+}
+
 export const getChiNhanh_Manager = async () => {
     const rows = await ReadQuery(`SELECT \`MaChiNhanh\`, \`TenChiNhanh\`, \`DiaChi\`, nhanvien.\`MaNV\`, CONCAT(nhanvien.\`Ho\`,' ', nhanvien.\`TenLot\`,' ', nhanvien.\`Ten\`) as 'TenQuanLy' from chinhanh JOIN nhanvien ON chinhanh.\`MSNV_QuanLy\`=nhanvien.\`MaNV\`;`)
+    return rows;
+}
+
+export const getMaPhongBan_TenPhongBan = async (MaChiNhanh) => {
+    if (MaChiNhanh !== "") {
+        const rows = await ReadQuery(`SELECT CONCAT(phongban.\`MaPhongBan\`, ' - ', phongban.\`TenPhongBan\`) FROM phongban WHERE phongban.\`MaChiNhanh\` = '${MaChiNhanh}';`);
+        return rows;
+    } 
+    const rows = await ReadQuery(`SELECT CONCAT(phongban.\`MaPhongBan\`, ' - ', phongban.\`TenPhongBan\`) FROM phongban`);
     return rows;
 }
 
@@ -77,3 +91,9 @@ export const getNhanVienByMaNV = async (MaNV) => {
     return rows.length ? rows[0] : null;
 };
 
+export const getBangLuong = async (MaPhongBan, EmpType, BeginDate, EndDate) => {
+    if ((BeginDate === "") || (EndDate === "")) return [];
+    const rows = await ReadFromProcedureQuery(`CALL View_BangLuong('${MaPhongBan}', ${EmpType}, '${BeginDate}', '${EndDate}')`);
+    // console.log(rows);
+    return rows;
+}

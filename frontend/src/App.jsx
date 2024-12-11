@@ -9,6 +9,7 @@ import PhongBanInfo from './pages/PhongBanInfo';
 import ChiNhanhInsert from './pages/ChiNhanhInsert';
 import NhanVienInsert from './pages/NhanVienInsert';
 import NhanVienEdit from './pages/NhanVienEdit';
+import TinhLuong from './pages/tinhLuong';
 
 
 // function App() {
@@ -72,6 +73,8 @@ function App() {
           <Route path='/chi-nhanh/insert' element={<ChiNhanhInsert/>}/>
           <Route path='/nhan-vien/insert' element={<NhanVienInsert/>}/>
           <Route path="/nhan-vien/edit/:MaNV" element={<NhanVienEdit />} />
+
+          <Route path='tinh-luong' element={<TinhLuong/>}/>
         </Routes>
       </div>
     </div>

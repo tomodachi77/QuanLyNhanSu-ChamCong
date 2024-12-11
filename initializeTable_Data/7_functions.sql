@@ -97,6 +97,19 @@ BEGIN
     return (total_hours >= GioTangCaToiThieu);
 END //
 
+DROP FUNCTION if EXISTS tonggiolamviec //
+Create Function tonggiolamviec (MaNV CHAR(6), ngayBatDau DATE, ngayKetThuc DATE) RETURNS DECIMAL(5, 2) DETERMINISTIC
+BEGIN
+    DECLARE total_time DECIMAL(5, 2);
+    SET total_time = (SELECT SUM(bangchamcong.`TongSoGioLam`)
+    from bangchamcong 
+    WHERE bangchamcong.`MaNV`=MaNV AND 
+    bangchamcong.`TongSoGioLam` IS NOT NULL AND
+    bangchamcong.`Ngay` BETWEEN ngayBatDau AND ngayKetThuc
+    GROUP BY bangchamcong.`MaNV`);
+    return total_time;
+END //
+
 DELIMITER ;
 
 -- TEST

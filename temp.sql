@@ -193,3 +193,94 @@ WHERE `GioVao` > '17:00:00' AND `MaNV`='NV6036' AND `Ngay` BETWEEN '2024-10-01' 
 
 -- KiemTraTangCa (MaNV CHAR(6), NgayBatDau Date, NgayKetThuc Date, GioTangCaToiThieu TIME)
 SELECT `KiemTraTangCa`('NV6036', '2024-10-01', '2024-11-30', '08:00:00');
+
+-- (MaNV CHAR(6), ngayBatDau DATE, ngayKetThuc DATE)
+
+SELECT NV_PB_0101.`MaNV`, `tinhLuong`(NV_PB_0101.`MaNV`, '2024-10-20', '2024-11-20') 
+FROM (SELECT `MaNV` FROM nhanvien NATURAL INNER JOIN phongban WHERE phongban.`MaPhongBan`='PB0101') AS NV_PB_0101;
+
+Select CONCAT(`MaChiNhanh`, ' - ', `TenChiNhanh`) from chinhanh
+
+;
+
+-- SELECT CONCAT(phongban.`MaPhongBan`, ' - ', phongban.`TenPhongBan`) FROM phongban WHERE phongban.`MaChiNhanh`
+
+DELIMITER //
+drop PROCEDURE if EXISTS `View_BangLuong` //
+create Procedure View_BangLuong (MaPhongBan CHAR(6), EmpType INT, BeginDate DATE, EndDate DATE) 
+BEGIN
+    DECLARE ThueSuat DECIMAL(5, 2);
+    DECLARE BaoHiemXH DECIMAL(5, 2);
+    
+    SET ThueSuat = (SELECT bangthietlapluong.`ThueSuat` from bangthietlapluong WHERE `NgayApDung` <= EndDate ORDER BY `NgayApDung` DESC LIMIT 1);
+    SET BaoHiemXH = (SELECT bangthietlapluong.`BaoHiemXH` from bangthietlapluong WHERE `NgayApDung` <= EndDate ORDER BY `NgayApDung` DESC LIMIT 1);
+    
+    IF EmpType = 0 THEN
+        IF MaPhongBan IS NULL THEN 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien;
+        ELSE 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien WHERE nhanvien.`MaPhongBan`=MaPhongBan;
+        END IF;
+    ELSEIF EmpType = 1 THEN
+        IF MaPhongBan IS NULL THEN 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien NATURAL INNER JOIN nhanvientoanthoigian;
+        ELSE 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien NATURAL INNER JOIN nhanvientoanthoigian WHERE `MaPhongBan`=MaPhongBan;
+        END IF;
+    ELSEIF EmpType = -1 THEN
+        IF MaPhongBan IS NULL THEN 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien NATURAL INNER JOIN nhanvienbanthoigian;
+        ELSE 
+            SELECT nhanvien.`MaNV`, CONCAT(nhanvien.`Ho`, ' ', nhanvien.`TenLot`, ' ', nhanvien.`Ten`) as TenNhanVien, tonggiolamviec(nhanvien.`MaNV`, BeginDate, EndDate) as TongGioLamViec, tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) as LuongTamTinh, ((tinhluong(nhanvien.`MaNV`, BeginDate, EndDate) - tinhluong(nhanvien.`MaNV`, BeginDate, EndDate)*(BaoHiemXH))*(1 - ThueSuat)) as LuongThucTe FROM nhanvien NATURAL INNER JOIN nhanvienbanthoigian WHERE `MaPhongBan`=MaPhongBan;
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+DELIMITER //
+CREATE PROCEDURE viewNhanVien ()
+BEGIN
+    SELECT * from quanlynhansu.nhanvien;
+END //
+
+-- DELIMITER ;
+
+CALL `viewNhanVien`;
+CALL `View_BangLuong`(NULL, 0, "2024-10-01", "2024-10-31");
+-- NV1108	Bùi Bích Như	7.57	189250
+SELECT tonggiolamviec('NV1108', '2024-10-01', '2024-10-31');
+DELIMITER //
+DROP FUNCTION if EXISTS tonggiolamviec //
+Create Function tonggiolamviec (MaNV CHAR(6), ngayBatDau DATE, ngayKetThuc DATE) RETURNS DECIMAL(5, 2) DETERMINISTIC
+BEGIN
+    DECLARE total_time DECIMAL(5, 2);
+    SET total_time = (SELECT SUM(bangchamcong.`TongSoGioLam`)
+    from bangchamcong 
+    WHERE bangchamcong.`MaNV`=MaNV AND 
+    bangchamcong.`TongSoGioLam` IS NOT NULL AND
+    bangchamcong.`Ngay` BETWEEN ngayBatDau AND ngayKetThuc
+    GROUP BY bangchamcong.`MaNV`);
+    return total_time;
+END //
+
+DELIMITER ;
+
+SELECT MaNV, tonggiolamviec(`MaNV`, '2024-10-01', '2024-10-31') from nhanvien; 
+
+SELECT * from bangchamcong WHERE `TongSoGioLam` is not NULL AND `Ngay` BETWEEN '2024-10-01' AND '2024-10-31' AND `MaNV`='NV9229';
+
+SELECT tonggiolamviec('NV9229', '2024-10-01', '2024-10-31')
+
+CALL `View_BangLuong`(NULL, 0, "2024-11-01", "2024-11-30");
+
+set = ( LIMIT 1);
+
+SELECT * from bangthietlapluong  ORDER BY `NgayApDung` DESC;
+
+SET @BaoHiemXH = (SELECT bangthietlapluong.`BaoHiemXH` from bangthietlapluong WHERE `NgayApDung` <= '2024-10-31' ORDER BY `NgayApDung` DESC LIMIT 1);
+SELECT @BaoHiemXH;
+
+CALL `View_BangLuong`("PB0301", 0, "2024-10-01", "2024-10-31");
+
+CALL `View_BangLuong`(NULL, 1, "2024-10-01", "2024-10-31");
+
+CALL `View_BangLuong`("PB0101", 1, "2024-10-01", "2024-10-31");

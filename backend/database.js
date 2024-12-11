@@ -16,12 +16,28 @@ export async function ReadQuery(sql, param) {
     try {
         const connection = await msyql.createConnection(connection_info)
         result = await connection.execute(sql, param);
+        // console.log(result);
     } catch (error) {
         console.log(error.message)
         success = false;
         // console.log(success)
     }
     return result[0];
+}
+
+export async function ReadFromProcedureQuery(sql, param) {
+    let result = '';
+    let success = true
+    try {
+        const connection = await msyql.createConnection(connection_info)
+        result = await connection.execute(sql, param);
+        // console.log(result);
+    } catch (error) {
+        console.log(error.message)
+        success = false;
+        // console.log(success)
+    }
+    return result[0][0];
 }
 
 export async function WriteQuery(sql, param) {

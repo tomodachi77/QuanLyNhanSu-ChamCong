@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { getChiNhanh, getChiNhanh_Manager, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV } from './api.js'
+import { getChiNhanh, getChiNhanh_Manager, getMaChiNhanh_TenChiNhanh, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV, getMaPhongBan_TenPhongBan, getBangLuong } from './api.js'
 import bodyParser from 'body-parser'
 
 dotenv.config()
@@ -153,7 +153,52 @@ app.get('/api/nhanvien-object', async (req, res) => {
     }
 });
 
-  
+app.get('/api/chinhanh-tenChiNhanh', async (req, res) => {
+    try {
+        const MaChiNhanh_TenChiNhanh = await getMaChiNhanh_TenChiNhanh();
+        res.status(200).json({
+            success: true,
+            MaChiNhanh_TenChiNhanh
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+})
+
+app.get('/api/phongBan-TenPhongBan/:MaChiNhanh', async (req, res) => {
+    // console.log(req.params.body);
+    let {MaChiNhanh} = req.params;
+    if (MaChiNhanh === 'all') MaChiNhanh = '';
+    // console.log(MaChiNhanh);
+    try {
+        const MaPhongBan_TenPhongBan = await getMaPhongBan_TenPhongBan(MaChiNhanh);
+        res.status(200).json({
+            success: true,
+            MaPhongBan_TenPhongBan
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+})
+
+app.get('/api/bang-luong', async (req, res) => {
+    let {MaPhongBan, EmpType, BeginDate, EndDate} = req.query;
+    if (!MaPhongBan) MaPhongBan = "all";
+    // console.log(MaPhongBan, EmpType, BeginDate, EndDate);
+    try {
+        const BangLuong = await getBangLuong(MaPhongBan, EmpType, BeginDate, EndDate);
+        // console.log(BangLuong)
+        res.status(200).json({
+            success: true,
+            BangLuong
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+})
 
 app.listen(PORT, (req, res) => {
     console.log(`Server start at http://localhost:${PORT}`);
