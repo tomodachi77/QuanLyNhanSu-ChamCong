@@ -1,5 +1,5 @@
-DROP Procedure insert_ChiNhanh;
 DELIMITER //
+DROP Procedure IF EXISTS insert_ChiNhanh//
 
 CREATE PROCEDURE IF NOT EXISTS insert_ChiNhanh (MaChiNhanh CHAR(4), TenChiNhanh NVARCHAR(100), DiaChi NVARCHAR(200), MSNV_QuanLy CHAR(6))
 BEGIN
