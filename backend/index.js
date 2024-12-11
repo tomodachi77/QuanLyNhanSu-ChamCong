@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { getChiNhanh, getChiNhanh_Manager, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh } from './api.js'
+import { getChiNhanh, getChiNhanh_Manager, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV } from './api.js'
 import bodyParser from 'body-parser'
 
 dotenv.config()
@@ -54,7 +54,106 @@ app.post('/api/chinhanh/insert', async function (req, res) {
 app.get('/api/FullTime-MaNV-TenNhanVien', async function (req, res) {
     const MaNV_TenNhanVien = await getMaNV_TenNhanVien();
     res.send({MaNV_TenNhanVien})
-}) 
+})
+
+// Thêm nhân viên
+app.post('/api/nhanvien/insert', async function (req, res) {
+    const { MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan } = req.body;
+    const [result, message] = await insertNhanVien(MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan);
+    if (result === 400) {
+        return res.status(400).json({
+            success: false,
+            message: message
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: 'Thêm nhân viên thành công'
+    });
+});
+
+// Xóa nhân viên
+app.delete('/api/nhanvien/delete/:MaNV', async function (req, res) {
+    const { MaNV } = req.params;
+    console.log(`Đang thực hiện yêu cầu xóa nhân viên với MãNV: ${MaNV}`);
+    const [result, message] = await deleteNhanVien(MaNV);
+    if (result === 400) {
+        return res.status(400).json({
+            success: false,
+            message: message
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: 'Xóa nhân viên thành công'
+    });
+});
+
+// Sửa thông tin nhân viên
+app.put('/api/nhanvien/update/:MaNV', async (req, res) => {
+    const { MaNV, Ho, TenLot, Ten, GioiTinh, Email, HeSoPhatDiTre, HeSoPhatVangKhongPhep, SoNgayNghi, LuongTheoGio, MaPhongBan } = req.body;
+    console.log("Dữ liệu nhận được từ frontend:", req.body); // Kiểm tra dữ liệu từ frontend
+    try {
+      const [result, message] = await updateNhanVien(
+        MaNV,
+        Ho,
+        TenLot,
+        Ten,
+        GioiTinh,
+        Email,
+        HeSoPhatDiTre,
+        HeSoPhatVangKhongPhep,
+        SoNgayNghi,
+        LuongTheoGio,
+        MaPhongBan
+      );
+      console.log("Kết quả cập nhật:", result); // Log kết quả từ database
+      if (result === 400) {
+        return res.status(400).json({ success: false, message });
+      }
+      res.status(200).json({ success: true, message: 'Cập nhật thành công' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+});
+  
+
+app.get('/api/phongban', async function (req, res) {
+    try {
+        const phongbans = await getDanhSachPhongBan(); // Hàm gọi từ api.js
+        res.json({ phongbans }); // Trả về JSON
+    } catch (error) {
+        console.error('Error in /api/phongban:', error); // Log lỗi chi tiết
+        res.status(500).json({ error: 'Internal Server Error' }); // Trả về lỗi nếu có
+    }
+});
+
+app.get('/api/nhanvien/:MaNV', async (req, res) => {
+    const { MaNV } = req.params;
+    try {
+      const nhanvien = await getNhanVienByMaNV(MaNV); // Hàm này cần lấy từ database
+      if (!nhanvien) {
+        return res.status(404).json({ success: false, message: 'Nhân viên không tồn tại' });
+      }
+      res.status(200).json({ success: true, nhanvien });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+});
+
+app.get('/api/nhanvien-object', async (req, res) => {
+    try {
+        const nhanvien = await getNhanVienObject();
+        res.status(200).json({ success: true, nhanvien });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+});
+
+  
 
 app.listen(PORT, (req, res) => {
     console.log(`Server start at http://localhost:${PORT}`);

@@ -1,9 +1,10 @@
 import { ReadQuery, WriteQuery } from "./database.js";
 
 export const getNhanVien = async () => {
-    const rows = await ReadQuery('Select * from nhanvien limit 5');
+    const rows = await ReadQuery('SELECT * FROM NhanVien');
     return rows;
-}
+};
+
 
 export const getPhongBan = async (MaPB) => {
     const rows = await ReadQuery(`SELECT * FROM phongban WHERE MaPhongBan='${MaPB}'`)
@@ -31,4 +32,48 @@ export const getMaNV_TenNhanVien = async () => {
     return rows
 }
 
+
+export const insertNhanVien = async (MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan) => {
+    const [result, message] = await WriteQuery(
+        `CALL ThemNhanVien('${MaNV}', '${Ho}', '${TenLot}', '${Ten}', '${GioiTinh}', '${Email}', ${LuongTheoGio}, '${MaPhongBan}')`
+    );
+    console.log("result", result)
+    return [result, message];
+};
+
+export const deleteNhanVien = async (MaNV) => {
+    const [result, message] = await WriteQuery(`CALL XoaNhanVien('${MaNV}')`);
+    return [result, message];
+};
+
+export const updateNhanVien = async (MaNV, Ho, TenLot, Ten, GioiTinh, Email, HeSoPhatDiTre, HeSoPhatVangKhongPhep, SoNgayNghi, LuongTheoGio, MaPhongBan) => {
+    console.log("Dữ liệu nhận từ frontend:", {
+        MaNV,
+        Ho,
+        TenLot,
+        Ten,
+        GioiTinh,
+        Email,
+        HeSoPhatDiTre,
+        HeSoPhatVangKhongPhep,
+        SoNgayNghi,
+        LuongTheoGio,
+        MaPhongBan
+    });
+    const [result, message] = await WriteQuery(
+        `CALL SuaNhanVien('${MaNV}', '${Ho}', '${TenLot}', '${Ten}', '${GioiTinh}', '${Email}', ${HeSoPhatDiTre}, ${HeSoPhatVangKhongPhep}, ${SoNgayNghi}, ${LuongTheoGio}, '${MaPhongBan}')`
+    );
+    console.log("result", result)
+    return [result, message];
+};
+
+export const getDanhSachPhongBan = async () => {
+    const rows = await ReadQuery(`SELECT MaPhongBan, TenPhongBan FROM phongban`);
+    return rows;
+};
+
+export const getNhanVienByMaNV = async (MaNV) => {
+    const rows = await ReadQuery(`SELECT * FROM NhanVien WHERE MaNV = '${MaNV}'`);
+    return rows.length ? rows[0] : null;
+};
 
