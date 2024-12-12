@@ -42,7 +42,7 @@ CREATE TABLE NhanVien (
 CREATE TABLE Sdt_NhanVien (
     MaNV CHAR(6),
     SoDienThoai VARCHAR(10),
-    PRIMARY KEY (MaNV, SoDienThoai)
+    PRIMARY KEY (MaNV, SoDienThoai),
     Foreign Key (MaNV) REFERENCES nhanvien(MaNV)
 );
 
@@ -118,7 +118,7 @@ CREATE TABLE BangChamCong (
     MaNV CHAR(6),
     Ngay DATE,
     TrangThai ENUM('Có mặt', 'Vắng có phép', 'Vắng không phép'),
-    TongSoGioLam DECIMAL(5, 2) DEFAULT NULL,
+    TongSoGioLam DECIMAL(5, 2) DEFAULT 0,
     PRIMARY KEY (MaNV, Ngay),
     FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
 );
