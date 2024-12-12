@@ -15,6 +15,7 @@ function PhongBanInsert() {
   });
 
   const [chiNhanhOptions, setChiNhanhOptions] = useState([]);
+  const [nhanVienOptions, setNhanVienOptions] = useState([]);
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -35,8 +36,24 @@ function PhongBanInsert() {
     }
   };
 
+// Fetch danh sách nhân viên vận hành từ backend
+  const fetchNhanViens = async () => {
+    try {
+      const res = await fetch('/api/FullTime-MaNV-TenNhanVien');
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      const data = await res.json();
+
+      // Chuyển đổi dữ liệu thành mảng chuỗi "MaNV - TenNV"
+      const nhanViens = data.MaNV_TenNhanVien.map(([MaNV, TenNV]) => `${MaNV} - ${TenNV}`);
+      setNhanVienOptions(nhanViens);
+    } catch (error) {
+      console.error('Error fetching nhanViens:', error.message);
+    }
+  };
+
   useEffect(() => {
     fetchChiNhanhs();
+    fetchNhanViens();
   }, []);
 
   // Các hàm cập nhật từng trường riêng biệt
@@ -48,7 +65,11 @@ function PhongBanInsert() {
     setNewPhongBan({ ...newPhongBan, MaChiNhanh });
   };
   const handleSetSoLuongNhanVien = (event) => setNewPhongBan({ ...newPhongBan, SoLuongNhanVien: event.target.value });
- 
+  const handleSetMaNVVH = (event) => {
+    const selectedOption = event.target.value;
+    const MSNV_VanHanh = selectedOption.split(' - ')[0]; // Lấy phần mã trước dấu "-"
+    setNewPhongBan({ ...newPhongBan, MSNV_VanHanh });
+  };
 
   const createPhongBan = async (phongBan) => {
     const errors = [];
@@ -135,7 +156,7 @@ function PhongBanInsert() {
         <InputField label={'Tên phòng ban'} placeholder={'Phòng Kế Toán'} type={'text'} onChangeHandle={handleSetTenPhongBan} />
         <SelectField label={'Mã chi nhánh'} options={chiNhanhOptions} onchangeHandler={handleSetMaChiNhanh} />
         <InputField label={'Số lượng nhân viên'} placeholder={'0'} type={'number'} onChangeHandle={handleSetSoLuongNhanVien} />
-        <SelectField options={options} label={'Chọn nhân viên vận hành phòng ban'} onchangeHandler={handleSetMaNVVH}/>
+        <SelectField options={nhanVienOptions} label={'Chọn nhân viên vận hành phòng ban'} onchangeHandler={handleSetMaNVVH}/>
         <div className='w-full flex flex-row justify-center gap-5'>
           <div className='my-3 w-fit border-blue-300 border rounded-md'>
             <Button label={'Quay lại'} path={'/phong-ban'} />

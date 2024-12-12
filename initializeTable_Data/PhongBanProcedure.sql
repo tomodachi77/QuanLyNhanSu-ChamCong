@@ -1,8 +1,46 @@
---Tính tổng số giờ làm thêm của từng phòng ban trong một khoảng thời gian
+
 
 DELIMITER //
+--Lọc phòng ban có số lượng nhân viên có trạng thái Bảng chấm công là "Có mặt" nhiều nhất
+CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()
+BEGIN
+    SELECT 
+        PB.MaPhongBan, PB.TenPhongBan, PB.SoLuongNhanVien, COUNT(NV.MaNV) AS SoLuongNhanVienCoMat
+    FROM 
+        PhongBan PB
+    JOIN 
+        NhanVien NV ON PB.MaPhongBan = NV.MaPhongBan
+    JOIN 
+        BangChamCong BCC ON NV.MaNV = BCC.MaNV
+    WHERE 
+        BCC.TrangThai = 'Có mặt'
+    GROUP BY 
+        PB.MaPhongBan
+    ORDER BY 
+        SoLuongNhanVienCoMat DESC;
+END//
 
-CREATE PROCEDURE TongGioLamThemTheoPhongBan(
+--Lọc phòng ban có số lượng nhân viên lớn hơn số lượng cho trước
+CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienLonHon(IN minEmployeeCount INT)
+BEGIN
+    SELECT 
+        PB.TenPhongBan, COUNT(NV.MaNV) AS EmployeeCount
+    FROM 
+        PhongBan PB
+    LEFT JOIN 
+        NhanVien NV ON PB.MaPhongBan = NV.MaPhongBan
+    WHERE 
+        PB.SoLuongNhanVien > minEmployeeCount
+    GROUP BY 
+        PB.TenPhongBan
+    HAVING 
+        EmployeeCount > minEmployeeCount
+    ORDER BY 
+        EmployeeCount DESC;
+END//
+
+--Tính tổng số giờ làm thêm của từng phòng ban trong một khoảng thời gian
+CREATE PROCEDURE TongGioLamThemTheoTungPhongBan(
     IN p_NgayBatDau DATE,
     IN p_NgayKetThuc DATE
 )
