@@ -20,7 +20,7 @@ BEGIN
         IF MaNV IS NULL OR NOT EXISTS (
         SELECT 1 
         FROM nhanvien 
-        WHERE MaNV = calculateTotalHours.MaNV
+        WHERE nhanvien.`MaNV` = MaNV
     ) THEN
         RETURN -1; -- Invalid employee ID
     END IF;
