@@ -27,7 +27,7 @@ function NhanVienInsert() {
   // Fetch danh sách phòng ban từ backend
   const fetchPhongBans = async () => {
     try {
-      const res = await fetch('/api/phongban');
+      const res = await fetch('/api/dsphongban');
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const data = await res.json();
 

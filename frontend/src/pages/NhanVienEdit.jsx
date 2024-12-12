@@ -61,7 +61,7 @@ function NhanVienEdit() {
   // Fetch danh sách phòng ban
   const fetchPhongBans = async () => {
     try {
-      const res = await fetch('/api/phongban'); // API lấy danh sách phòng ban
+      const res = await fetch('/api/dsphongban'); // API lấy danh sách phòng ban
       const data = await res.json();
       const phongbans = data.phongbans.map(
         ([MaPhongBan, TenPhongBan]) => `${MaPhongBan} - ${TenPhongBan}`

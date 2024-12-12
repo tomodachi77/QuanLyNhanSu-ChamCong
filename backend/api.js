@@ -71,19 +71,6 @@ export const deleteNhanVien = async (MaNV) => {
 };
 
 export const updateNhanVien = async (MaNV, Ho, TenLot, Ten, GioiTinh, Email, HeSoPhatDiTre, HeSoPhatVangKhongPhep, SoNgayNghi, LuongTheoGio, MaPhongBan) => {
-    console.log("Dữ liệu nhận từ frontend:", {
-        MaNV,
-        Ho,
-        TenLot,
-        Ten,
-        GioiTinh,
-        Email,
-        HeSoPhatDiTre,
-        HeSoPhatVangKhongPhep,
-        SoNgayNghi,
-        LuongTheoGio,
-        MaPhongBan
-    });
     const [result, message] = await WriteQuery(
         `CALL SuaNhanVien('${MaNV}', '${Ho}', '${TenLot}', '${Ten}', '${GioiTinh}', '${Email}', ${HeSoPhatDiTre}, ${HeSoPhatVangKhongPhep}, ${SoNgayNghi}, ${LuongTheoGio}, '${MaPhongBan}')`
     );
