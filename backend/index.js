@@ -143,15 +143,15 @@ app.put('/api/nhanvien/update/:MaNV', async (req, res) => {
 });
   
 
-// app.get('/api/phongban', async function (req, res) {
-//     try {
-//         const phongbans = await getDanhSachPhongBan(); // Hàm gọi từ api.js
-//         res.json({ phongbans }); // Trả về JSON
-//     } catch (error) {
-//         console.error('Error in /api/phongban:', error); // Log lỗi chi tiết
-//         res.status(500).json({ error: 'Internal Server Error' }); // Trả về lỗi nếu có
-//     }
-// });
+app.get('/api/dsphongban', async function (req, res) {
+    try {
+        const phongbans = await getDanhSachPhongBan(); // Hàm gọi từ api.js
+        res.json({ phongbans }); // Trả về JSON
+    } catch (error) {
+        console.error('Error in /api/dsphongban:', error); // Log lỗi chi tiết
+        res.status(500).json({ error: 'Internal Server Error' }); // Trả về lỗi nếu có
+    }
+});
 
 app.get('/api/nhanvien/:MaNV', async (req, res) => {
     const { MaNV } = req.params;
@@ -164,16 +164,6 @@ app.get('/api/nhanvien/:MaNV', async (req, res) => {
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: 'Lỗi server' });
-    }
-});
-
-app.get('/api/nhanvien-object', async (req, res) => {
-    try {
-        const nhanvien = await getNhanVienObject();
-        res.status(200).json({ success: true, nhanvien });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Lỗi server' });
     }
 });
 
