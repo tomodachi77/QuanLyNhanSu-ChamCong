@@ -311,3 +311,9 @@ VALUES
     ('DA1023', 'Theodore-khoi', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque porta erat viverra, ultrices lectus sed, blandit tellus. Fusce sit amet nunc iaculis, ultrices enim finibus, pretium nunc. Fusce id malesuada magna, a rutrum metus. Mauris pretium est sed ex egestas, ut tempus sapien rutrum. Praesent diam ante, efficitur et convallis in, faucibus a massa. Nulla justo leo, sagittis in ipsum a, ultricies dignissim diam. Maecenas in iaculis tortor, non dapibus libero. Nunc et porta felis. Vestibulum tempor, diam eu semper dictum, magna leo ultricies elit, vel porttitor quam libero at ipsum. Phasellus tempus semper neque. Nulla facilisis, nunc sit amet sodales pharetra, purus odio iaculis libero, vitae finibus nisi ex id tortor. Etiam ornare laoreet est non varius.', '2023-12-01', '2024-01-08', '2024-01-05', 'PB0301', 'NV0000');
 
 SELECT `MaNhanVien`, COUNT(nhanvienthamgiaduan.`MaDuAn`) FROM nhanvienthamgiaduan GROUP BY `MaNhanVien`;
+
+CALL LocPhongBanCoSoLuongNhanVienLonHon(10);
+
+CALL LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat();
+
+CALL TongGioLamThemTheoTungPhongBan('2022-01-01', '2024-12-31');

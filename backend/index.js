@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { getChiNhanh, getChiNhanh_Manager, getMaChiNhanh_TenChiNhanh, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV, getMaPhongBan_TenPhongBan, getBangLuong, getPhongBanInfo, getPhongBanInfo_Manager } from './api.js'
+import { getChiNhanh, getChiNhanh_Manager, getMaChiNhanh_TenChiNhanh, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV, getMaPhongBan_TenPhongBan, getBangLuong, getPhongBanInfo, getPhongBanInfo_Manager, getPhongBanCoSoLuongNhanVienLonHon, getPhongBanCoSoLuongNhanVienCoMatNhieuNhat } from './api.js'
 import bodyParser from 'body-parser'
 
 dotenv.config()
@@ -143,15 +143,15 @@ app.put('/api/nhanvien/update/:MaNV', async (req, res) => {
 });
   
 
-app.get('/api/phongban', async function (req, res) {
-    try {
-        const phongbans = await getDanhSachPhongBan(); // Hàm gọi từ api.js
-        res.json({ phongbans }); // Trả về JSON
-    } catch (error) {
-        console.error('Error in /api/phongban:', error); // Log lỗi chi tiết
-        res.status(500).json({ error: 'Internal Server Error' }); // Trả về lỗi nếu có
-    }
-});
+// app.get('/api/phongban', async function (req, res) {
+//     try {
+//         const phongbans = await getDanhSachPhongBan(); // Hàm gọi từ api.js
+//         res.json({ phongbans }); // Trả về JSON
+//     } catch (error) {
+//         console.error('Error in /api/phongban:', error); // Log lỗi chi tiết
+//         res.status(500).json({ error: 'Internal Server Error' }); // Trả về lỗi nếu có
+//     }
+// });
 
 app.get('/api/nhanvien/:MaNV', async (req, res) => {
     const { MaNV } = req.params;
@@ -223,6 +223,46 @@ app.get('/api/bang-luong', async (req, res) => {
         res.status(500).json({ success: false, message: 'Lỗi server' });
     }
 })
+
+app.get('/api/phongban-co-nhanvien-lon-hon', async (req, res) => {
+    const { min } = req.query; // Lấy tham số "min" từ query string
+    if (!min) {
+        return res.status(400).json({
+            success: false,
+            message: 'Vui lòng cung cấp tham số "min"',
+        });
+    }
+
+    try {
+        const filteredPhongBan = await getPhongBanCoSoLuongNhanVienLonHon(min);
+        res.status(200).json({
+            success: true,
+            filteredPhongBan,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server',
+        });
+    }
+});
+
+app.get('/api/phongban-nhanvien-comatnhieunhat', async (req, res) => {
+    try {
+        const maxPresencePhongBan = await getPhongBanCoSoLuongNhanVienCoMatNhieuNhat();  // Hàm này sẽ gọi thủ tục bạn đã tạo
+        res.status(200).json({
+            success: true,
+            maxPresencePhongBan,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Lỗi khi lấy dữ liệu phòng ban' 
+        });
+    }
+});
 
 app.listen(PORT, (req, res) => {
     console.log(`Server start at http://localhost:${PORT}`);

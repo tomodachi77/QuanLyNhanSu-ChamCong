@@ -2,6 +2,7 @@
 
 DELIMITER //
 --Lọc phòng ban có số lượng nhân viên có trạng thái Bảng chấm công là "Có mặt" nhiều nhất
+DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat//
 CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()
 BEGIN
     SELECT 
@@ -21,10 +22,11 @@ BEGIN
 END//
 
 --Lọc phòng ban có số lượng nhân viên lớn hơn số lượng cho trước
+DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienLonHon//
 CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienLonHon(IN minEmployeeCount INT)
 BEGIN
     SELECT 
-        PB.TenPhongBan, COUNT(NV.MaNV) AS EmployeeCount
+        PB.MaPhongBan, PB.TenPhongBan, COUNT(NV.MaNV) AS EmployeeCount
     FROM 
         PhongBan PB
     LEFT JOIN 
@@ -32,7 +34,7 @@ BEGIN
     WHERE 
         PB.SoLuongNhanVien > minEmployeeCount
     GROUP BY 
-        PB.TenPhongBan
+        PB.MaPhongBan
     HAVING 
         EmployeeCount > minEmployeeCount
     ORDER BY 
@@ -40,6 +42,7 @@ BEGIN
 END//
 
 --Tính tổng số giờ làm thêm của từng phòng ban trong một khoảng thời gian
+DROP PROCEDURE IF EXISTS TongGioLamThemTheoTungPhongBan//
 CREATE PROCEDURE TongGioLamThemTheoTungPhongBan(
     IN p_NgayBatDau DATE,
     IN p_NgayKetThuc DATE

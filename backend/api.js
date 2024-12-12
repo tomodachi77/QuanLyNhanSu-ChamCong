@@ -107,3 +107,18 @@ export const getBangLuong = async (MaPhongBan, EmpType, BeginDate, EndDate) => {
     // console.log(rows);
     return rows;
 }
+
+export const getPhongBanCoSoLuongNhanVienLonHon = async (min) => {
+    const rows = await ReadFromProcedureQuery(`CALL LocPhongBanCoSoLuongNhanVienLonHon(${min})`);
+    return rows;
+};
+
+export const getPhongBanCoSoLuongNhanVienCoMatNhieuNhat = async () => {
+    try {
+        const rows = await ReadFromProcedureQuery('CALL LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()');
+        return rows;
+    } catch (error) {
+        console.error(error);
+        throw error;  // Rerun the error if needed for logging
+    }
+};
