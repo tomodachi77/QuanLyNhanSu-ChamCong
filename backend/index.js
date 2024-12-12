@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { getChiNhanh, getChiNhanh_Manager, getMaChiNhanh_TenChiNhanh, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV, getMaPhongBan_TenPhongBan, getBangLuong } from './api.js'
+import { getChiNhanh, getChiNhanh_Manager, getMaChiNhanh_TenChiNhanh, getMaNV_TenNhanVien, getNhanVien, getPhongBan, insertChiNhanh, insertNhanVien, deleteNhanVien, updateNhanVien, getDanhSachPhongBan, getNhanVienByMaNV, getMaPhongBan_TenPhongBan, getBangLuong, getPhongBanInfo, getPhongBanInfo_Manager } from './api.js'
 import bodyParser from 'body-parser'
 
 dotenv.config()
@@ -24,9 +24,19 @@ app.get('/api/chinhanh', async function (req, res) {
     res.send({chinhanh})
 })
 
+app.get('/api/phongban', async function (req, res) {
+    const phongbaninfo = await getPhongBanInfo_Manager();
+    res.send({phongbaninfo})
+})
+
 app.get('/api/chinhanh-tenQuanLy', async function (req, res) {
     const chinhanh_tenQuanLy = await getChiNhanh_Manager();
     res.send({chinhanh_tenQuanLy})
+})
+
+app.get('/api/chinhanh-tenVanHanh', async function (req, res){
+    const phongban_tenVanHanh = await getPhongBanInfo_Manager();
+    res.send({phongban_tenVanHanh})
 })
 
 app.get('/api/phongban/:MaPB', async function (req, res) {
@@ -55,6 +65,20 @@ app.get('/api/FullTime-MaNV-TenNhanVien', async function (req, res) {
     const MaNV_TenNhanVien = await getMaNV_TenNhanVien();
     res.send({MaNV_TenNhanVien})
 })
+app.post('/api/phongban/insert', async function (req, res) {
+    const { MaPhongBan, TenPhongBan, MaChiNhanh, SoLuongNhanVien, MSNV_VanHanh } = req.body;
+    const [result, message] = await insertPhongBan(MaPhongBan, TenPhongBan, MaChiNhanh, SoLuongNhanVien, MSNV_VanHanh);
+    if (result === 400) {
+        return res.status(400).json({
+            success: false,
+            message: message
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: 'Thêm phòng ban thành công'
+    });
+});
 
 // Thêm nhân viên
 app.post('/api/nhanvien/insert', async function (req, res) {

@@ -11,6 +11,11 @@ export const getPhongBan = async (MaPB) => {
     return rows;
 }
 
+export const getPhongBanInfo = async () => {
+    const rows = await ReadQuery('SELECT * FROM phongban');
+    return rows;
+}
+
 export const getChiNhanh = async () => {
     const rows = await ReadQuery('Select * from chinhanh');
     return rows;
@@ -23,6 +28,11 @@ export const getMaChiNhanh_TenChiNhanh = async() => {
 
 export const getChiNhanh_Manager = async () => {
     const rows = await ReadQuery(`SELECT \`MaChiNhanh\`, \`TenChiNhanh\`, \`DiaChi\`, nhanvien.\`MaNV\`, CONCAT(nhanvien.\`Ho\`,' ', nhanvien.\`TenLot\`,' ', nhanvien.\`Ten\`) as 'TenQuanLy' from chinhanh JOIN nhanvien ON chinhanh.\`MSNV_QuanLy\`=nhanvien.\`MaNV\`;`)
+    return rows;
+}
+
+export const getPhongBanInfo_Manager = async () => {
+    const rows = await ReadQuery(`SELECT nhanvien.\`MaPhongBan\`, \`TenPhongBan\`, \`MaChiNhanh\`, \`SoLuongNhanVien\`, nhanvien.\`MaNV\`, CONCAT (nhanvien.\`Ho\`,' ', nhanvien.\`TenLot\`,' ', nhanvien.\`Ten\`) as 'TenVanHanh' from phongban JOIN nhanvien ON phongban.\`MSNV_VanHanh\`=nhanvien.\`MaNV\`;`)
     return rows;
 }
 

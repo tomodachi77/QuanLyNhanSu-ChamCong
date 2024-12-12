@@ -42,7 +42,7 @@ CREATE TABLE NhanVien (
 CREATE TABLE Sdt_NhanVien (
     MaNV CHAR(6),
     SoDienThoai VARCHAR(10),
-    PRIMARY KEY (MaNV, SoDienThoai)
+    PRIMARY KEY (MaNV, SoDienThoai),
     Foreign Key (MaNV) REFERENCES nhanvien(MaNV)
 );
 
