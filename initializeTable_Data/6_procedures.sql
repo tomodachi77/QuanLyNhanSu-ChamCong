@@ -101,9 +101,6 @@ BEGIN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Số ngày nghỉ phải lớn hơn hoặc bằng 0.';
     END IF;
 
-
-
-
     -- Sửa thông tin nhân viên
     UPDATE NhanVien
     SET Ho = p_Ho,

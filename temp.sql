@@ -284,3 +284,30 @@ CALL `View_BangLuong`("PB0301", 0, "2024-10-01", "2024-10-31");
 CALL `View_BangLuong`(NULL, 1, "2024-10-01", "2024-10-31");
 
 CALL `View_BangLuong`("PB0101", 1, "2024-10-01", "2024-10-31");
+
+SELECT "Trần Anh" REGEXP '[^a-zA-ZÀ-ỹ ]';
+
+SELECT "Khôi" REGEXP '[^a-zA-ZÀ-ỹ ]';
+
+Select "khoi.trananh2004@hcmut.edu.vn" REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+
+SELECT "ChinhánhKhoi-TrầnAnh" REGEXP '^[[:alnum:].,\\-]*$';
+
+select * from chinhanh;
+
+
+INSERT INTO chinhanh VALUES ("CN16", "Chi nhánh Linkedtinpakc", "Lk.21, Hồ Mã Linh, Bình Dương", 'NV9999');
+
+INSERT INTO NhanVien (MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan)
+VALUES
+    ('NV9990', 'Văn', 'Phú Nhuận', 'Ân', 'Nam', 'vanphuan12@gmail.com', 90000, 'PB0106');
+
+SELECT * from sdt_nhanvien;
+
+insert into sdt_nhanvien VALUES ("NV1108", "2289321642");
+
+INSERT INTO duan(`MaDuAn`, `TenDuAn`, `MoTa`, `NgayBatDau`, `Deadline`, `NgayKetThuc`, `MaPhongBan`, `MaQuanLy`)
+VALUES 
+    ('DA1023', 'Theodore-khoi', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque porta erat viverra, ultrices lectus sed, blandit tellus. Fusce sit amet nunc iaculis, ultrices enim finibus, pretium nunc. Fusce id malesuada magna, a rutrum metus. Mauris pretium est sed ex egestas, ut tempus sapien rutrum. Praesent diam ante, efficitur et convallis in, faucibus a massa. Nulla justo leo, sagittis in ipsum a, ultricies dignissim diam. Maecenas in iaculis tortor, non dapibus libero. Nunc et porta felis. Vestibulum tempor, diam eu semper dictum, magna leo ultricies elit, vel porttitor quam libero at ipsum. Phasellus tempus semper neque. Nulla facilisis, nunc sit amet sodales pharetra, purus odio iaculis libero, vitae finibus nisi ex id tortor. Etiam ornare laoreet est non varius.', '2023-12-01', '2024-01-08', '2024-01-05', 'PB0301', 'NV0000');
+
+SELECT `MaNhanVien`, COUNT(nhanvienthamgiaduan.`MaDuAn`) FROM nhanvienthamgiaduan GROUP BY `MaNhanVien`;

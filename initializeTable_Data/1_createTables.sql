@@ -118,7 +118,7 @@ CREATE TABLE BangChamCong (
     MaNV CHAR(6),
     Ngay DATE,
     TrangThai ENUM('Có mặt', 'Vắng có phép', 'Vắng không phép'),
-    TongSoGioLam DECIMAL(5, 2) DEFAULT NULL,
+    TongSoGioLam DECIMAL(5, 2) DEFAULT 0,
     PRIMARY KEY (MaNV, Ngay),
     FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
 );
