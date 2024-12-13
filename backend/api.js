@@ -102,7 +102,7 @@ export const getPhongBanCoSoLuongNhanVienLonHon = async (min) => {
 
 export const getPhongBanCoSoLuongNhanVienCoMatNhieuNhat = async () => {
     try {
-        const rows = await ReadFromProcedureQuery('CALL LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()');
+        const rows = await ReadFromProcedureQuery('CALL LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat');
         return rows;
     } catch (error) {
         console.error(error);

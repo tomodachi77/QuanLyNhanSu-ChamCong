@@ -9,7 +9,7 @@ BEGIN
     UPDATE soluongnhanvien 
     SET SoLuongNhanVien = SoLuongNhanVien + 1
     WHERE MaPhongBan = NEW.MaPhongBan;
-END;
+END //
 
 -- Trigger sau khi xóa nhân viên
 CREATE TRIGGER update_employee_count_after_delete
@@ -19,7 +19,7 @@ BEGIN
     UPDATE PhongBan 
     SET SoLuongNhanVien = SoLuongNhanVien - 1
     WHERE MaPhongBan = OLD.MaPhongBan;
-END;
+END //
 DROP TRIGGER IF EXISTS update_employee_count_after_update;
 CREATE TRIGGER update_employee_count_after_update
 AFTER UPDATE ON NhanVien

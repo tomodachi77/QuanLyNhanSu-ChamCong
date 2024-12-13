@@ -1,6 +1,5 @@
 DELIMITER //
 DROP Procedure IF EXISTS insert_ChiNhanh//
-
 CREATE PROCEDURE IF NOT EXISTS insert_ChiNhanh (MaChiNhanh CHAR(4), TenChiNhanh NVARCHAR(100), DiaChi NVARCHAR(200), MSNV_QuanLy CHAR(6))
 BEGIN
     INSERT INTO chinhanh VALUES (MaChiNhanh, TenChiNhanh, DiaChi, MSNV_QuanLy);
@@ -122,7 +121,24 @@ CREATE PROCEDURE XoaNhanVien(
     IN p_MaNV CHAR(6)
 )
 BEGIN
-    -- Xóa dữ liệu liên quan từ các bảng con trước
+    -- Xử lý các ràng buộc liên quan đến bảng khác
+    
+    -- 1. Bảng `DuAn`: Cập nhật MaQuanLy thành NULL nếu nhân viên là quản lý dự án
+    UPDATE DuAn
+    SET MaQuanLy = NULL
+    WHERE MaQuanLy = p_MaNV;
+
+    -- 2. Bảng `PhongBan`: Cập nhật MSNV_VanHanh thành NULL nếu nhân viên là người vận hành
+    UPDATE PhongBan
+    SET MSNV_VanHanh = NULL
+    WHERE MSNV_VanHanh = p_MaNV;
+
+    -- 3. Bảng `ChiNhanh`: Cập nhật MSNV_QuanLy thành NULL nếu nhân viên là quản lý chi nhánh
+    UPDATE ChiNhanh
+    SET MSNV_QuanLy = NULL
+    WHERE MSNV_QuanLy = p_MaNV;
+
+    -- 4. Xóa dữ liệu liên quan từ các bảng con trước
     DELETE FROM LanRaVao WHERE MaNV = p_MaNV;
     DELETE FROM BangChamCong WHERE MaNV = p_MaNV;
     DELETE FROM LichLamViec WHERE MaNV = p_MaNV;
@@ -131,11 +147,11 @@ BEGIN
     DELETE FROM Sdt_NhanVien WHERE MaNV = p_MaNV;
     DELETE FROM BangLuong WHERE MaNV = p_MaNV;
 
-    -- Xóa nhân viên từ bảng cụ thể
+    -- 5. Xóa dữ liệu từ các bảng phân loại nhân viên
     DELETE FROM NhanVienBanThoiGian WHERE MaNV = p_MaNV;
     DELETE FROM NhanVienToanThoiGian WHERE MaNV = p_MaNV;
 
-    -- Cuối cùng, xóa nhân viên từ bảng chính
+    -- 6. Cuối cùng, xóa nhân viên từ bảng chính
     DELETE FROM NhanVien WHERE MaNV = p_MaNV;
 END //
 
@@ -168,5 +184,44 @@ BEGIN
         END IF;
     END IF;
 END //
+
+DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat//
+CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()
+BEGIN
+    SELECT 
+        PB.MaPhongBan, PB.TenPhongBan, PB.SoLuongNhanVien, COUNT(NV.MaNV) AS SoLuongNhanVienCoMat
+    FROM 
+        PhongBan PB
+    JOIN 
+        NhanVien NV ON PB.MaPhongBan = NV.MaPhongBan
+    JOIN 
+        BangChamCong BCC ON NV.MaNV = BCC.MaNV
+    WHERE 
+        BCC.TrangThai = 'Có mặt'
+    GROUP BY 
+        PB.MaPhongBan
+    ORDER BY 
+        SoLuongNhanVienCoMat DESC;
+END//
+
+
+DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienLonHon//
+CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienLonHon(IN minEmployeeCount INT)
+BEGIN
+    SELECT 
+        PB.MaPhongBan, PB.TenPhongBan, COUNT(NV.MaNV) AS EmployeeCount
+    FROM 
+        PhongBan PB
+    LEFT JOIN 
+        NhanVien NV ON PB.MaPhongBan = NV.MaPhongBan
+    WHERE 
+        PB.SoLuongNhanVien > minEmployeeCount
+    GROUP BY 
+        PB.MaPhongBan
+    HAVING 
+        EmployeeCount > minEmployeeCount
+    ORDER BY 
+        EmployeeCount DESC;
+END//
 
 DELIMITER;

@@ -1,7 +1,8 @@
 
 
-DELIMITER //
 --Lọc phòng ban có số lượng nhân viên có trạng thái Bảng chấm công là "Có mặt" nhiều nhất
+--Lọc phòng ban có số lượng nhân viên lớn hơn số lượng cho trước
+DELIMITER //
 DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat//
 CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat()
 BEGIN
@@ -21,7 +22,7 @@ BEGIN
         SoLuongNhanVienCoMat DESC;
 END//
 
---Lọc phòng ban có số lượng nhân viên lớn hơn số lượng cho trước
+
 DROP PROCEDURE IF EXISTS LocPhongBanCoSoLuongNhanVienLonHon//
 CREATE PROCEDURE LocPhongBanCoSoLuongNhanVienLonHon(IN minEmployeeCount INT)
 BEGIN
@@ -40,26 +41,4 @@ BEGIN
     ORDER BY 
         EmployeeCount DESC;
 END//
-
---Tính tổng số giờ làm thêm của từng phòng ban trong một khoảng thời gian
-DROP PROCEDURE IF EXISTS TongGioLamThemTheoTungPhongBan//
-CREATE PROCEDURE TongGioLamThemTheoTungPhongBan(
-    IN p_NgayBatDau DATE,
-    IN p_NgayKetThuc DATE
-)
-BEGIN
-    SELECT 
-        pb.TenPhongBan,
-        SUM(TIMESTAMPDIFF(HOUR, lrv.GioVao, lrv.GioRa)) - COUNT(*) * 8 AS TongGioLamThem
-    FROM 
-        LanRaVao lrv
-    INNER JOIN NhanVien n ON lrv.MaNV = n.MaNV
-    INNER JOIN PhongBan pb ON n.MaPhongBan = pb.MaPhongBan
-    WHERE 
-        lrv.Ngay BETWEEN p_NgayBatDau AND p_NgayKetThuc
-    GROUP BY pb.TenPhongBan
-    HAVING SUM(TIMESTAMPDIFF(HOUR, lrv.GioVao, lrv.GioRa)) > COUNT(*) * 8
-    ORDER BY TongGioLamThem DESC;
-END //
-
 DELIMITER ;

@@ -317,3 +317,6 @@ CALL LocPhongBanCoSoLuongNhanVienLonHon(10);
 CALL LocPhongBanCoSoLuongNhanVienCoMatNhieuNhat();
 
 CALL TongGioLamThemTheoTungPhongBan('2022-01-01', '2024-12-31');
+
+select MaNV, tinhluong(MaNV, '2024-11-01', '2024-12-31')
+from nhanvien 

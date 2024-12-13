@@ -79,3 +79,11 @@ CALL `ThemNhanVien`('NV0234', "Tran", "Anh", "Khoi", "Nam", "trananhkhoitv@gmail
 -- loop qua từng ngày trong bảng ngày chấm công, tính tổng luongngay theo từng nhân viên
 
 SELECT * from quanlynhansu.bangchamcong LIMIT 20;
+INSERT INTO NhanVien (MaNV, Ho, TenLot, Ten, GioiTinh, Email, LuongTheoGio, MaPhongBan)
+VALUES
+    ('NV0000', 'Văn', 'Phú', 'Ân', 'Nam', 'vanphuan2@gmail.com', 90000, 'PB0101');
+
+SELECT *
+from phongban
+where MaPhongBan = 'PB0101';
+update nhanvien
