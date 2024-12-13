@@ -106,6 +106,7 @@ function PhongBanInfo() {
       </h1>
       <div className="flex gap-4 items-center">
         {/* Input để nhập số lượng nhân viên */}
+        <p>Nhập số lượng nhân viên tối thiểu</p>
         <input
           type="number"
           placeholder="Nhập số lượng nhân viên tối thiểu"
@@ -143,7 +144,7 @@ function PhongBanInfo() {
       <PhongBanTable rowsData={currentRows} /> */}
 
       {/* Điều hướng phân trang */}
-      <div className='flex justify-center gap-4 mt-4'>
+      <div className='flex justify-center gap-4 mt-4 items-center'>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -163,7 +164,7 @@ function PhongBanInfo() {
         </button>
       </div>
 
-      <div className='w-fit border-blue-300 hover:border-blue-600 border rounded-md'>
+      <div className='w-fit border-blue-300 hover:border-blue-600 border rounded-md hidden'>
         <Button label={"Thêm phòng ban"} path={"/phong-ban/insert"} />
       </div>
     </div>

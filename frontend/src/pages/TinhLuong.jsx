@@ -167,7 +167,7 @@ function TinhLuong() {
                 Trang {curPage} / {maxPage}
                 <div className='w-fit border border-blue-400 rounded-md'><Button label={"Trang sau"} onClickFunction={handleNextPage}/></div>
             </div>
-            <div className='border rounded-md border-blue-400'>
+            <div className='border rounded-md border-blue-400 hidden'>
                 <Button label={"Check Value"} onClickFunction={checkValue}/>
             </div>
         </div>
