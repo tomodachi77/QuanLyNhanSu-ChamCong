@@ -1,0 +1,83 @@
+\usepackage[
+    a4paper,
+    vmargin=25mm,
+    hmargin=25mm,
+    headheight=14.4pt,
+    nomarginpar
+]{geometry}
+
+\ifthenelse{\equal{\print}{oneside}}{
+    \geometry{
+        hmargin=15mm,
+        bindingoffset=20mm,
+    }
+
+    \AddToHook{shipout/background}{%
+        \begin{tikzpicture}[remember picture,overlay,very thin,gray!20]
+            \coordinate (A) at (current page.north west);
+            \coordinate (B) at (current page.south west);
+            \filldraw (A) -- ([xshift=+20mm]A) -- ([xshift=+20mm]B) -- (B);
+        \end{tikzpicture}
+    }
+}{}
+
+\ifthenelse{\equal{\print}{twoside}}{
+    \geometry{
+        hmargin=15mm,
+        bindingoffset=20mm,
+        twoside,
+    }
+
+    \AddToHook{shipout/background}{%
+        \begin{tikzpicture}[remember picture,overlay,very thin,gray!20]
+            \ifthenelse{\isodd{\thepage}}{
+                \coordinate (A) at (current page.north west);
+                \coordinate (B) at (current page.south west);
+                \filldraw (A) -- ([xshift=+20mm]A) -- ([xshift=+20mm]B) -- (B);
+            }{
+                \coordinate (A) at (current page.north east);
+                \coordinate (B) at (current page.south east);
+                \filldraw (A) -- ([xshift=-20mm]A) -- ([xshift=-20mm]B) -- (B);
+            }
+        \end{tikzpicture}
+    }
+}{}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+
+\fancypagestyle{blank}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{nohf}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{default}{
+    \fancyhf{}
+    \ifthenelse{\equal{\print}{twoside}}{
+        \ifthenelse{\isodd{\thepage}}{
+            \fancyhead[R]{\pdfsubject\ifthenelse{\equal{\group}{}}{}{ - \group}}
+        }{
+            \fancyhead[L]{\pdfsubject\ifthenelse{\equal{\group}{}}{}{ - \group}}
+        }
+    }{
+        \fancyhead[R]{\pdfsubject \ifthenelse{\equal{\group}{}}{}{ - \group}}
+    }
+    \fancyfoot[C]{\duallang{Page}{Trang} \thepage/\pageref*{LastPage}}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{toc}[nohf]{
+    \setlength{\parskip}{12pt}
+}
+
+\fancypagestyle{content}[default]{}
+
+\usepackage{lscape}

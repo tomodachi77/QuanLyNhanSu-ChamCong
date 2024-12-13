@@ -1,0 +1,47 @@
+\usepackage{polyglossia}
+
+\duallang{
+    \setmainlanguage{english}
+}{
+    \setmainlanguage{vietnamese}
+}
+
+\usepackage{fontspec}
+\usepackage[fixed]{fontawesome5}
+\usepackage{microtype}
+\setmainfont{IBMPlexSerif}[
+    Path        = fonts/,
+    Extension   = .ttf,
+    UprightFont     = *-Regular,
+    BoldFont        = *-Bold,
+    ItalicFont      = *-Italic,
+    BoldItalicFont  = *-BoldItalic,
+]
+\setsansfont{SourceSansPro}[
+    Path        = fonts/,
+    Extension   = .ttf,
+    UprightFont     = *-Regular,
+    BoldFont        = *-Bold,
+    ItalicFont      = *-Italic,
+    BoldItalicFont  = *-BoldItalic,
+]
+\setmonofont{JetBrainsMono}[
+    Path        = fonts/,
+    Extension   = .ttf,
+    UprightFont     = *-Regular,
+    BoldFont        = *-Bold,
+    ItalicFont      = *-Italic,
+    BoldItalicFont  = *-BoldItalic,
+    %
+    % Contextuals = Alternate,
+]
+
+\usepackage{xurl}
+\usepackage{float}
+\usepackage{setspace}
+\singlespacing
+
+\usepackage[tocskip=6pt]{parskip}
+\makeatletter
+\newcommand{\@minipagerestore}{\setlength{\parskip}{6pt}}
+\makeatother

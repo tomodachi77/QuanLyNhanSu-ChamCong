@@ -1,0 +1,30 @@
+\usepackage{hyperref}
+\hypersetup{
+    unicode=true,
+    %
+    linktoc=all,
+    hidelinks,
+    breaklinks=true,
+    colorlinks=true,
+    %
+    urlcolor=DodgerBlue,
+    linkcolor=DodgerBlue,
+    citecolor=DodgerBlue,
+    anchorcolor=DodgerBlue,
+    %
+    pdfcenterwindow=true,
+    pdfdisplaydoctitle=true,
+    pdftitle={\pdfproject},
+    pdfauthor={\pdfauthor},
+    pdfsubject={\pdfsubject},
+}
+
+\usepackage[all]{hypcap} % Use after hyperref
+\renewcommand{\hypcapspace}{0.3\textheight}
+
+\ifthenelse{\equal{\pdfpasswd}{}}{}{
+    \special{pdf:encrypt userpw (user) ownerpw (\pdfpasswd) length 128 perm 2052}
+}
+
+\pagenumbering{arabic}
+\onehalfspacing

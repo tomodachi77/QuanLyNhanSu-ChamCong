@@ -1,0 +1,70 @@
+\clearpage
+
+\pagestyle{blank}
+
+\ifthenelse{\equal{\print}{twoside}}{
+    \setcounter{page}{0}
+    \null\newpage\clearpage
+}{}
+
+\begin{titlepage}
+    \centering
+
+    \textbf{\uppercase{\Large\university}}
+
+    \uppercase{\faculty}
+
+    \vspace{64pt}
+
+    \includegraphics[height=5cm]{\currfiledir logo.png}
+
+    \vspace{64pt}
+
+    \textbf{\uppercase{\large \ifthenelse{\equal{\pdfsubject}{}}{Subject: \makebox[200pt]{\dotfill}}{\pdfsubject}}}
+
+    \parbox[c][\baselineskip]{\textwidth}{\vfill\rule{\textwidth}{0.5pt}\vfill}
+
+    \hspace{0.1\textwidth}
+    \textbf{\uppercase{\Large \ifthenelse{\equal{\pdfproject}{}}{PROJECT: \dotfill}{\pdfproject}}}
+    \hspace{0.1\textwidth}
+
+    \parbox[c][\baselineskip]{\textwidth}{\vfill\rule{\textwidth}{0.5pt}\vfill}
+
+    \vspace{\baselineskip}
+
+    \begin{minipage}{0.25\linewidth}
+        \duallang{Group:}{Nhóm:}
+    \end{minipage}%
+    \begin{minipage}[t]{0.75\linewidth}
+        \ifthenelse{\equal{\group}{}}{\dotfill}{\group}
+    \end{minipage}
+
+    \vspace{\baselineskip}
+
+    \begin{minipage}{0.25\linewidth}
+        \duallang{Instructor(s):}{Giảng viên hướng dẫn:}
+    \end{minipage}%
+    \begin{minipage}[t]{0.75\linewidth}
+        \ifthenelse{\equal{\instructors}{}}{\dotfill}{\instructors}
+    \end{minipage}
+
+    \vspace{\baselineskip}
+
+    \begin{minipage}{0.25\linewidth}
+        \duallang{Implementer(s):}{Sinh viên thực hiện:}
+    \end{minipage}%
+    \begin{minipage}[t]{0.75\linewidth}
+        \ifthenelse{\equal{\implementers}{}}{\dotfill}{\implementers}
+    \end{minipage}
+
+    \vfill
+
+    \location, \duallang{\the\month/\the\year}{tháng \the\month\ năm \the\year}
+
+\end{titlepage}
+
+\clearpage
+
+\ifthenelse{\equal{\print}{twoside}}{
+    \null\newpage\clearpage
+}{}
