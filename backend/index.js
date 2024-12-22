@@ -14,6 +14,20 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 })
 
+app.get('/api/admin-info', async (req, res) => {
+    try {
+        const sql = 'SELECT fullname, email FROM admins WHERE id = ?';
+        const [admin] = await ReadQuery(sql, [req.user.id]); // Use the `id` from the decoded token
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+        res.status(200).json({ success: true, admin });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+})
+
 app.get('/api/nhanvien', async function (req, res) {
     const nhanvien = await getNhanVien();
     res.send({nhanvien})

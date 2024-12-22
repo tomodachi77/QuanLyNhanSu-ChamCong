@@ -18,7 +18,7 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="border-t border-slate-300">
-                <Button label={"Thông tin cá nhân"}></Button>
+                <Button label={"Thông tin cá nhân"} path={'/personal-info'}></Button>
             </div>
         </div>
     )
