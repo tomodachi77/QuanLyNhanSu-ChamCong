@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className='flex flex-row'>
-      <Sidebar/>
+      {showSidebar && <Sidebar /> }
       <div className='w-full'>
         <Routes>
           <Route path="/login" element={<LoginPage />} />

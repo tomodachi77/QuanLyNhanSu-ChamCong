@@ -18,13 +18,8 @@ const Sidebar = () => {
                     <Button label={"Tính lương"} path={'/tinh-luong'} className='w-full'/>
                 </div>
             </div>
-<<<<<<< Updated upstream
-            <div className="border-t border-slate-300">
-                <Button label={"Thông tin cá nhân"}></Button>
-=======
             <div className="flex items-center border-t border-slate-300">
                 <Button label={"Đăng xuất"} path={'/logout'}></Button>
->>>>>>> Stashed changes
             </div>
         </div>
     )

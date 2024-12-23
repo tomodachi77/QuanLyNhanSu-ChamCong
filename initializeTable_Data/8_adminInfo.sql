@@ -1,10 +1,10 @@
 USE quanlynhansu;
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE, -- Format: long.tran2510
-    password VARCHAR(255) NOT NULL,        -- Hashed password
-    fullname VARCHAR(255) NOT NULL,        -- Full name: Trần Thành Long
-    email VARCHAR(255) NOT NULL            -- Email: long.tran2510@gmail.com
+    username VARCHAR(255) NOT NULL UNIQUE, 
+    password VARCHAR(255) NOT NULL,
+    fullname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
 );
 
 -- Insert the new data
